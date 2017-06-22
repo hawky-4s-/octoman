@@ -1,0 +1,52 @@
+build:
+  main: main.go
+  binary: octoman
+  ldflags: -s -w -X helpers.BuildDate={{.Date}}
+  goos:
+    - darwin
+    - linux
+    - windows
+#    - freebsd
+#    - netbsd
+#    - openbsd
+#    - dragonfly
+  goarch:
+    - amd64
+#    - 386
+#    - arm
+#    - arm64
+  env:
+    - CGO_ENABLED=0
+#  fpm:
+#    formats:
+#      - deb
+#    vendor: "octoman.io"
+#    homepage: "https://octoman.io/"
+#    maintainer: "Christian Lipphardt <christian.lipphardt@gmail.com>"
+#    description: "A GitHub Organization Manager built with love in GoLang."
+#    license: "Apache 2.0"
+
+ archive:
+   format: tar.gz
+   format_overrides:
+     - goos: windows
+       format: zip
+   name_template: "{{.Binary}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+   replacements:
+     amd64: 64bit
+     386: 32bit
+     arm: ARM
+     arm64: ARM64
+     darwin: macOS
+     linux: Linux
+     windows: Windows
+     openbsd: OpenBSD
+     netbsd: NetBSD
+     freebsd: FreeBSD
+     dragonfly: DragonFlyBSD
+   files:
+     - README.md
+     - LICENSE.md
+
+ release:
+   draft: true
